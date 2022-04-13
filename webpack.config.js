@@ -9,17 +9,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: [/\.js?$/], // [/\.jsx?$/], // change to this in when we add react
+        test: [/\.jsx?$/], // change to this in when we add react
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/env'] // ['@babel/env', '@babel/react'] // change to this when we add react
+          presets: ['@babel/env', '@babel/react'] // change to this when we add react
         }
       }
     ]
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.js', '*'] // ['.js', '.jsx', '*'] // change to this when we add react
+    extensions: ['.js', '.jsx', '*'] // change to this when we add react
   }
 };
