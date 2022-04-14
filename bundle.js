@@ -12,11 +12,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RECEIVE_TODO": () => (/* binding */ RECEIVE_TODO),
 /* harmony export */   "RECEIVE_TODOS": () => (/* binding */ RECEIVE_TODOS),
+/* harmony export */   "REMOVE_TODO": () => (/* binding */ REMOVE_TODO),
 /* harmony export */   "receiveTodo": () => (/* binding */ receiveTodo),
-/* harmony export */   "receiveTodos": () => (/* binding */ receiveTodos)
+/* harmony export */   "receiveTodos": () => (/* binding */ receiveTodos),
+/* harmony export */   "removeTodo": () => (/* binding */ removeTodo)
 /* harmony export */ });
 var RECEIVE_TODOS = "RECEIVE_TODOS";
 var RECEIVE_TODO = "RECEIVE_TODOS";
+var REMOVE_TODO = "REMOVE_TODO";
 var receiveTodos = function receiveTodos(todos) {
   return {
     // takes in multiple todo objects
@@ -29,6 +32,12 @@ var receiveTodos = function receiveTodos(todos) {
 var receiveTodo = function receiveTodo(todo) {
   return {
     type: RECEIVE_TODO,
+    todo: todo
+  };
+};
+var removeTodo = function removeTodo(todo) {
+  return {
+    type: REMOVE_TODO,
     todo: todo
   };
 };
@@ -238,10 +247,12 @@ __webpack_require__.r(__webpack_exports__);
  // This is the index of all the todos. We get props from state.
 
 var todoIndex = function todoIndex(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Todo List goes here!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, props.todos.map(function (todo) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Todo List goes here! HERREEEE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, props.todos.map(function (todo) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_todo_list_items__WEBPACK_IMPORTED_MODULE_2__["default"], {
       todo: todo,
-      key: todo.id
+      key: todo.id,
+      removeTodo: props.removeTodo,
+      receiveTodo: props.receiveTodo
     });
   }) // Todos is in our props. We iterate over each todo, rendering it as part of the TodoListItem
   // Calling the component automatically renders it. We put carrots around it because its a component
@@ -285,6 +296,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatchEvent) {
   return {
     receiveTodo: function receiveTodo(todo) {
       return dispatchEvent((0,_actions_todo_actions__WEBPACK_IMPORTED_MODULE_2__.receiveTodo)(todo));
+    },
+    removeTodo: function removeTodo(todo) {
+      return dispatchEvent((0,_actions_todo_actions__WEBPACK_IMPORTED_MODULE_2__.removeTodo)(todo));
     }
   };
 }; // Think of as a native method. Every time we call this function
@@ -348,7 +362,10 @@ var TodoListItem = /*#__PURE__*/function (_React$Component) {
   _createClass(TodoListItem, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, " Title: ", this.props.todo.title, " Body: ", this.props.todo.body, " Done: ", this.props.todo.done.toString());
+      //  debugger
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, " Title: ", this.props.todo.title, " Body: ", this.props.todo.body, " Done: ", this.props.todo.done.toString()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+        onClick: this.props.removeTodo(this.props.todo.id)
+      }, "Delete"));
     }
   }]);
 
@@ -454,6 +471,11 @@ var todosReducer = function todosReducer() {
 
       return Object.assign({}, state, newTodo);
     // default is like else
+
+    case _actions_todo_actions__WEBPACK_IMPORTED_MODULE_0__.REMOVE_TODO:
+      nextState = Object.assign({}, state);
+      delete nextState[action.todo.id];
+      return nextState;
 
     default:
       return state;

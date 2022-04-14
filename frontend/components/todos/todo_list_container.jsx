@@ -3,7 +3,7 @@ import todoIndex  from './todo_list';
 
 // actions
 
-import { receiveTodos, receiveTodo } from '../../actions/todo_actions';
+import { receiveTodos, receiveTodo, removeTodo } from '../../actions/todo_actions';
 import { allTodos } from '../../reducers/selectors';
 
 
@@ -13,7 +13,8 @@ import { allTodos } from '../../reducers/selectors';
  });
 
  const mapDispatchToProps = dispatchEvent => ({
-   receiveTodo: todo => dispatchEvent(receiveTodo(todo))
+   receiveTodo: todo => dispatchEvent(receiveTodo(todo)),
+   removeTodo: todo => dispatchEvent(removeTodo(todo))
  });
  
  // Think of as a native method. Every time we call this function

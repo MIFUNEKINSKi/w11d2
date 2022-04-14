@@ -7,10 +7,11 @@ import TodoForm from './todo_form';
 const todoIndex = (props) => {
   return (
     <div>
-      <h3>Todo List goes here!</h3>
+      <h3>Todo List goes here! HERREEEE</h3>
       <ul>
         {
-          props.todos.map(todo => (<TodoListItem todo={todo} key={todo.id}/>))
+        
+          props.todos.map(todo => (<TodoListItem todo={todo} key={todo.id} removeTodo={props.removeTodo} receiveTodo={props.receiveTodo}/>))
           // Todos is in our props. We iterate over each todo, rendering it as part of the TodoListItem
           // Calling the component automatically renders it. We put carrots around it because its a component
           // We could've done this manually but wanted to do it dynamically
